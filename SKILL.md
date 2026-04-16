@@ -1,11 +1,11 @@
 ---
 name: openclaw-workspace-sowork
 description: >
-  Production-ready OpenClaw workspace template for marketing teams.
+  Production-ready workspace template for Claude Code, OpenClaw, and Hermes.
   Includes brand positioning, web research, and content writing skills,
   plus a full AGENTS/SOUL/TOOLS/USER/IDENTITY/HEARTBEAT/MEMORY workspace system.
   Battle-tested across 13 markets by SoWork. DeepEval score: 0.940.
-version: "1.0.0"
+version: "1.1.0"
 author: cj-wang-sowork
 license: MIT
 tags:
@@ -19,13 +19,13 @@ tags:
   - memory
   - multi-agent
 requirements:
-  - OpenClaw (any version)
-  - A Linux/macOS VM or VPS ($6/mo minimum)
+  - Claude Code, OpenClaw, or Hermes
+  - A Linux/macOS machine or VM
 ---
 
 # openclaw-workspace-sowork
 
-A production-ready OpenClaw workspace template for marketing teams — clone it, fill in your brand context, and run.
+A production-ready workspace template for Claude Code, OpenClaw, and Hermes — clone it, fill in your brand context, and run.
 
 ## What This Skill Does
 
@@ -35,7 +35,15 @@ When you install this workspace, your OpenClaw agent gains:
 2. **Web Research** — Structured market research and trend monitoring across any market.
 3. **Content Writing** — Brand-aligned content (social, blog, campaigns) for any platform.
 
-Beyond skills, you get a **complete workspace file system**:
+Beyond skills, you get a **complete workspace file system** plus a quick installer for three runtimes:
+
+| Runtime | Install path |
+|---------|--------------|
+| Claude Code | project root with `AGENTS.md` launcher + `./.sowork-workspace/` via `./scripts/install-workspace.sh --target claude --dest ...` |
+| OpenClaw | `~/.openclaw/workspace` |
+| Hermes | `~/.hermes/skills/openclaw-imports/openclaw-workspace-sowork` |
+
+The Claude installer refuses to overwrite an existing `AGENTS.md` unless you pass `--force`.
 
 | File | Purpose |
 |------|---------|
@@ -45,16 +53,31 @@ Beyond skills, you get a **complete workspace file system**:
 | USER.md | Team context, preferences (main sessions only) |
 | IDENTITY.md | Name, emoji, avatar |
 | HEARTBEAT.md | Periodic health tasks and content pipeline checks |
-| MEMORY.md | Iron-law rules, key learnings (security-gated) |
+| MEMORY.md | Long-term memory template for persistent context (security-gated) |
 
 ## Installation
 
 ```bash
-# Install via npx skills CLI
-npx skills add cj-wang-sowork/openclaw-workspace-sowork
+# Clone the repo
+git clone https://github.com/cj-wang-sowork/openclaw-workspace-sowork.git
+cd openclaw-workspace-sowork
 
-# Or clone directly to your OpenClaw workspace
-git clone https://github.com/cj-wang-sowork/openclaw-workspace-sowork.git ~/.openclaw/workspace
+# Install into OpenClaw
+./scripts/install-workspace.sh --target openclaw
+
+# Install into Claude Code (project-local)
+./scripts/install-workspace.sh --target claude --dest ~/workspace/your-project
+
+# Install into Hermes
+./scripts/install-workspace.sh --target hermes
+```
+
+For `--target all`, `--dest` applies to the Claude Code project only. OpenClaw and Hermes keep their default install paths.
+
+If you still prefer the Skills CLI path for OpenClaw only:
+
+```bash
+npx skills add cj-wang-sowork/openclaw-workspace-sowork
 ```
 
 ## Quick Usage

@@ -19,6 +19,7 @@ Most OpenClaw workspaces are empty scaffolding. This one has **actual content yo
 
 - ✅ **3 ready-to-use skills** — brand positioning, web research, content writing
 - ✅ **Complete workspace system** — AGENTS + SOUL + TOOLS + USER + IDENTITY + HEARTBEAT + MEMORY
+- ✅ **Cross-agent quick installer** — one script for Claude Code, OpenClaw, and Hermes
 - ✅ **A complete marketing team example** — 3 agents running on 1 VM, with cost breakdown
 - ✅ **VM setup guide** — step-by-step from a $6/mo VPS to a running OpenClaw agent
 - ✅ **Brand-in-SOUL guide** — how to embed brand positioning into your agent's identity
@@ -31,14 +32,35 @@ Clone it. Customize it. Run it.
 ## Quick Start
 
 ```bash
-# Install via npx skills CLI
-npx skills add cj-wang-sowork/openclaw-workspace-sowork
+# 1) Clone the repo
+git clone https://github.com/cj-wang-sowork/openclaw-workspace-sowork.git
+cd openclaw-workspace-sowork
 
-# Or clone directly to your OpenClaw workspace
-git clone https://github.com/cj-wang-sowork/openclaw-workspace-sowork.git ~/.openclaw/workspace
+# 2) Install to your target runtime
+./scripts/install-workspace.sh --target openclaw
+./scripts/install-workspace.sh --target claude --dest ~/workspace/your-project
+./scripts/install-workspace.sh --target hermes
 ```
 
-Then start OpenClaw:
+### Install Targets
+
+| Target | What it installs | Default destination |
+|--------|------------------|---------------------|
+| Claude Code | `AGENTS.md` launcher + `.sowork-workspace/` context bundle in a project root | `--dest` required |
+| OpenClaw | Full workspace bundle | `~/.openclaw/workspace` |
+| Hermes | Skill pack with workspace templates + references | `~/.hermes/skills/openclaw-imports/openclaw-workspace-sowork` |
+
+Note: the Claude installer refuses to overwrite an existing `AGENTS.md` unless you pass `--force`.
+
+### One command for all 3
+
+```bash
+./scripts/install-workspace.sh --target all --dest ~/workspace/your-project
+```
+
+For `--target all`, `--dest` applies to the Claude Code project only. OpenClaw and Hermes still install to their default paths.
+
+Then start OpenClaw if needed:
 
 ```bash
 openclaw onboard --install-daemon
@@ -82,7 +104,7 @@ This template is extracted from real operations at SoWork — not a toy example:
 | `USER.md` | Team profile, preferences | Main sessions only |
 | `IDENTITY.md` | Name, emoji, avatar, self-description | Every turn |
 | `HEARTBEAT.md` | Periodic health tasks, content pipeline checks | Heartbeat turns |
-| `MEMORY.md` | Iron-law rules, hard-won learnings | Main sessions only (security-gated) |
+| `MEMORY.md` | Long-term memory template for persistent context | Main sessions only (security-gated) |
 
 ### Examples & Docs
 
@@ -90,7 +112,7 @@ This template is extracted from real operations at SoWork — not a toy example:
 |------|-----------------|
 | `examples/marketing-team/` | 3-agent team setup with full cost breakdown |
 | `docs/workspace-deep-dive.md` | Token optimization, security gates, file design guide |
-| `scripts/` | VM bootstrap and agent startup scripts |
+| `scripts/` | Quick installer for Claude Code, OpenClaw, and Hermes |
 
 ---
 
@@ -115,7 +137,7 @@ This template is extracted from real operations at SoWork — not a toy example:
 │   └── marketing-team/         # 3-agent team example
 ├── docs/
 │   └── workspace-deep-dive.md  # Deep-dive guide
-├── scripts/                    # VM setup scripts
+├── scripts/                    # Quick installer and automation tools
 └── outputs/                    # Agent output storage
 ```
 
@@ -137,13 +159,15 @@ Result: **DeepEval brand consistency score of 0.940** across 13 different market
 
 ---
 
-## Install via Skills CLI
+## Install via Skills CLI (OpenClaw)
 
 ```bash
 npx skills add cj-wang-sowork/openclaw-workspace-sowork
 ```
 
 Requires: [Node.js](https://nodejs.org) + [skills CLI](https://github.com/VoltAgent/awesome-openclaw-skills)
+
+If you want the full multi-agent bundle for Claude Code, OpenClaw, or Hermes, use `./scripts/install-workspace.sh` instead.
 
 ---
 
